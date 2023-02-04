@@ -1,0 +1,26 @@
+{% include 'base.html' %}
+
+<h3>This is where you will register!</h3>
+
+<br>
+
+<form method ="POST" autocomplete="off" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!--
+    {{form.username}}
+    <br>
+    {{form.email}}
+    <br>
+    {{form.password1}}
+    <br>
+    {{form.password2}}
+    <br>
+    -->
+
+    {{form.as_p}}
+
+    <input type = "submit" value="Submit">
+
+
+</form>

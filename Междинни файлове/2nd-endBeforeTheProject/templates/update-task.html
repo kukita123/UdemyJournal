@@ -1,0 +1,21 @@
+{% include 'base.html' %}
+
+<h3>This is where we will update a task</h3>
+
+<br>
+
+<form method ="POST" autocomplete="off" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!--
+    {{form.title}}
+    {{form.description}}
+    -->
+
+    {{form.as_p}}
+
+    <input type = "submit" value="submit">
+
+
+</form>
+

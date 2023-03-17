@@ -7,7 +7,7 @@
 
         <head>
 
-            <title>Edenthought | My thoughts</title>
+            <title>Edenthought | Update thought</title>
             <meta charset="utf-8" />
             <meta name="viewport" content="width-device-width, initial-scale=1, maximum-scale=1"/>
             <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.min.css">
@@ -18,27 +18,28 @@
         
 	{% include 'base.html' %}
 
+        <br>
+
         <body>
 
-  
-                {% for th in thought %}
-                    <div class="container bg-white shadow-md p-5" style=margin-top:20px;>
-                        {{th.title}}
-                        <br><br>
-                        {{th.content}}
-
-                        <br><br>
-
-                        <a class="btn btn-primary navbar-btn" type="button"  href="{% url 'update-thought' th.id %}">Update</a> 
-                        <br><br>
-                        <a class="btn btn-danger navbar-btn" type="button"  href="{% url 'delete-thought' th.id %}">Delete</a>
-                    
-                    </div>
-                {% endfor %}
-              
-            
+            <div class="container bg-white shadow-md p-5">
+      
+                <form method="POST" autocomplete="off">
+                    {% csrf_token %}
+                
+                    {{form.title|as_crispy_field}}
+                    <br><br>
+                
+                    {{form.content|as_crispy_field}}
+                    <br><br>
+                
+                    <button type="submit" class="btn btn-secondary btn-lg w-100 btn-block p-4">&nbsp; Update thought </button>
+                
+                </form>
+            </div>
       
         </body>
+
 
 
         <script src="{% static 'js/app.js' %}"></script>

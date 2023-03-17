@@ -7,25 +7,19 @@
 
         <head>
 
-          <title>Edenthought</title>
-
-          <meta charset="utf-8" />
-
-          <meta name="viewport" content="width-device-width, initial-scale=1, maximum-scale=1"/>
-
-          <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.min.css">
-
-          <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+            <title>Edenthought</title>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width-device-width, initial-scale=1, maximum-scale=1"/>
+            <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.min.css">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 
         </head>
 
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
 
-            <a class="navbar-brand main-heading"> 
-                    
-              &nbsp; Edenthought 
-            
+            <a class="navbar-brand main-heading">                     
+              &nbsp; Edenthought             
             </a>
         
         
@@ -43,51 +37,31 @@
             </button>
         
         
-              <div class="collapse navbar-collapse text-center" id="navbarNavDropdown">
-        
+              <div class="collapse navbar-collapse text-center" id="navbarNavDropdown">        
                 
-                <ul class="navbar-nav ms-auto">
-        
-        
-                  &nbsp;     &nbsp;     &nbsp; 
-        
-        
-                  <li class="nav-item">
-              
-                    <a class="btn btn-primary navbar-btn" type="button"  href="{% url 'register' %}">Register</a>
-        
-                  </li>
-        
+                <ul class="navbar-nav ms-auto">        
         
                   &nbsp;     &nbsp;     &nbsp; 
-                  
+
+                  <li class="nav-item">              
+                    <a class="btn btn-primary navbar-btn" type="button"  href="{% url 'register'%}">Register</a>        
+                  </li>        
         
-                  <li class="nav-item">
+                   &nbsp;     &nbsp;     &nbsp; 
+
+                  <li class="nav-item">        
+                    <a class="btn btn-primary navbar-btn" type="button"  href="{% url 'my-login'%}">Login</a>        
+                  </li>        
         
-                    <a class="btn btn-primary navbar-btn" type="button"  href="{% url 'my-login' %}">Login</a>
-        
-                  </li>
-        
-        
-                  &nbsp;     &nbsp;     &nbsp; 
-                  
-        
-                </ul>
-              
+                  &nbsp;     &nbsp;     &nbsp;    
+
+                </ul>              
                 
-              </div>
-        
+              </div>        
         
         </nav>
 
-        
-
-
-	<h3 id="hw-text"> Home page! </h3>
-
-
         <br>
-
 
         <body>
       
@@ -95,14 +69,12 @@
             <br>
       
             <div class="text-center">
-      
-            <h2> Edenthought.... A home for your thoughts. </h2>
-      
-              <br>
-                
-            
-              <a class="btn btn-outline-primary" type="button"  href="{% url 'register' %}">Register</a>
-      
+
+              <h2> Edenthought.... A home for your thoughts. </h2>
+        
+              <br>                  
+              
+              <a class="btn btn-outline-primary" type="button"  href="{% url 'register' %}">Register</a>        
             
             </div>
       
@@ -112,10 +84,8 @@
 
 
         <script src="{% static 'js/app.js' %}"></script>
-
         
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"  crossorigin="anonymous"></script>
-
 
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
 

@@ -7,7 +7,7 @@
 
         <head>
 
-            <title>Edenthought | Post thought</title>
+            <title>Edenthought | Profile Management</title>
             <meta charset="utf-8" />
             <meta name="viewport" content="width-device-width, initial-scale=1, maximum-scale=1"/>
             <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.min.css">
@@ -27,15 +27,22 @@
                 <form method="POST" autocomplete="off">
                     {% csrf_token %}
                 
-                    {{form.title|as_crispy_field}}
+                    {{form.username|as_crispy_field}}
                     <br><br>
                 
-                    {{form.content|as_crispy_field}}
+                    {{form.email|as_crispy_field}}
                     <br><br>
                 
-                    <button type="submit" class="btn btn-secondary btn-lg w-100 btn-block p-4">&nbsp; Post thought </button>
+                    <button type="submit" class="btn btn-secondary btn-lg w-100 btn-block p-4">&nbsp; Update  </button>
                 
                 </form>
+            </div>
+
+            <div class="container bg-white shadow-md p-5">
+                <p>Manage your profile and settings: For instance you may want to <strong> delete your accoun</strong></strohg></p>
+            
+                <a class="btn btn-secondary btn-lg w-100 btn-block p-4" type="button"  href="{% url 'delete-account' %}">Proceed to delete your account</a>
+    
             </div>
       
         </body>

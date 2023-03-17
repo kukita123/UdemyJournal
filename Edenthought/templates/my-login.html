@@ -3,64 +3,63 @@
 
 <!DOCTYPE html>
 
-    <html lang="en">
+<html lang="en">
 
-        <head>
+    <head>
 
-            <title>Edenthought | Login</title>
+        <title>Edenthought | Login</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width-device-width, initial-scale=1, maximum-scale=1"/>
+        <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 
-            <meta charset="utf-8" />
+    </head>
 
-            <meta name="viewport" content="width-device-width, initial-scale=1, maximum-scale=1"/>
+    <body>
+        <br>
+        <div class="container bg-white shadow-md p-5">            
+            
+            <h3>Create your account</h3>
+            <h5>Share your thoughts today!</h5>
+            <br><br>
+            
+            <form method="POST" autocomplete="off">
+                {% csrf_token %}
 
-            <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.min.css">
-
-            <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-
-        </head>
-
-
-
-        <body>
-            <br>
-            <div class ="container bg-white shadow-md p-5 form-layout">
-
-                <h3>Login to your account</h3>
-                <h5>Share your thoughts today!</h5>
-                <br>
-
-                <form method = "POST" autocomplete="off">
-
-                    {% csrf_token%}
-
-
-                    {{form.username|as_crispy_field}}
-                    <br>
-
-                    {{form.password|as_crispy_field}}
-                    <br>
-
-                    <button type="submit" class=" btn btn-secondary btn-lg w-100 btn-block p-4"> &nbsp; Login </button>
-                </form>
-
+                {{form.username|as_crispy_field}}
                 <br><br>
-                {% for message in messages %}
 
-                    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-                        <p id="message-timer" class="alert alert-success float-center text-center message-text">
+                {{form.password|as_crispy_field}}
+                <br><br>
+    
+                <button type="submit" class="btn btn-secondary btn-lg w-100 btn-block p-4">&nbsp; Login </button>
+            
+            </form>
+
+            <br><br>
+
+            {% for message in messages %}
+
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+
+                    <p id="message-timer" class="alert alert-success float-center text-center message-text">
                         {{message}}
-                        </p>
-                    {% endif %}
+                    </p>
 
-                {% endfor %}
-                
+                {% endif %}          
 
-                <br>
-                <div class = "text-center">
-                    <p>Don't have an account? </p> <a href="{% url 'register' %}">Register</a>
-                </div>
+            {% endfor %}
+
+            <br><br>
+            <div class="text-center">
+                <p>Don't have an account? </p><a href="{% url 'register'%}">Register</a>
             </div>
-            <br>
-        </body>
+        </div>
+        <br>
 
-    </html>
+
+
+
+    </body>
+    
+</html>

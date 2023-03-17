@@ -1,18 +1,26 @@
 from django.shortcuts import redirect, render
 
-# - Registration, Login
-from .forms import CreateUserForm, LoginForm, ThoughtPostForm
 from django.http import HttpResponse
 
-# - Login
+# - Register, Login, Post, Update
+from .forms import CreateUserForm, LoginForm, ThoughtPostForm, ThoughtUpdateForm, UpdateUserForm
+
+# - Authentication
 from django.contrib.auth.models import auth
+
 from django.contrib.auth import authenticate
 
-# - Protect user dashboard from unauthorized login
+# - Delete user
+from django.contrib.auth.models import User
+
+# - To protect the views
 from django.contrib.auth.decorators import login_required
 
-# - Import django messages
+# - To generate django massages
 from django.contrib import messages
+
+# - To read a thought
+from .models import Thought
 
 # Create your views here.
 
@@ -23,26 +31,27 @@ def home(request):
 
     return render(request, 'index.html')
 
-
 # - Register
+
+
 def register(request):
 
     form = CreateUserForm()
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = CreateUserForm(request.POST)
 
         if form.is_valid():
             form.save()
-
-            messages.success(request, "Your account was created successfully!")
+            messages.success(request, "Your account was created!")
             return redirect('my-login')
 
     context = {'form': form}
     return render(request, 'register.html', context)
 
-
 # - Login
+
+
 def my_login(request):
 
     form = LoginForm()
@@ -65,12 +74,14 @@ def my_login(request):
 
 
 # - Dashboard
+
 @login_required(login_url='my-login')
 def dashboard(request):
+
     return render(request, 'profile/dashboard.html')
 
 
-# - User logout
+# - Logout
 def user_logout(request):
 
     auth.logout(request)
@@ -89,11 +100,94 @@ def post_thought(request):
 
         if form.is_valid():
             thought = form.save(commit=False)
-            thought.user = request.user  # this is the foreign key for the user, who is logged in
-
+            thought.user = request.user
             thought.save()
             return redirect('dashboard')
 
     context = {'form': form}
-
     return render(request, 'profile/post-thought.html', context=context)
+
+
+# - My thoughts
+
+@login_required(login_url='my-login')
+def my_thoughts(request):
+
+    current_user = request.user.id
+
+    thought = Thought.objects.all().filter(user=current_user)
+
+    context = {'thought': thought}
+
+    return render(request, 'profile/my-thoughts.html', context=context)
+
+
+# - Update thought
+
+@login_required(login_url='my-login')
+def update_thought(request, pk):
+
+    thought = Thought.objects.get(id=pk)
+    form = ThoughtUpdateForm(instance=thought)
+
+    if request.method == 'POST':
+        form = ThoughtUpdateForm(request.POST, instance=thought)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('my-thoughts')
+
+    context = {'form': form}
+    return render(request, 'profile/update-thought.html', context=context)
+
+
+# - Delete thought
+
+@login_required(login_url='my-login')
+def delete_thought(request, pk):
+
+    thought = Thought.objects.get(id=pk)
+
+    if request.method == 'POST':
+
+        thought.delete()
+        return redirect('my-thoughts')
+
+    return render(request, 'profile/delete-thought.html')
+
+# - Profile management
+
+
+@login_required(login_url='my-login')
+def profile_management(request):
+
+    form = UpdateUserForm(instance=request.user)
+
+    if request.method == 'POST':
+        form = UpdateUserForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('dashboard')
+
+    context = {'form': form}
+
+    return render(request, 'profile/profile-management.html', context=context)
+
+
+# - Delete account
+
+@login_required(login_url='my-login')
+def delete_account(request):
+
+    if request.method == 'POST':
+
+        deleteUser = User.objects.get(username=request.user)
+
+        deleteUser.delete()
+
+        return redirect('my-login')
+
+    return render(request, 'profile/delete-account.html')

@@ -18,13 +18,24 @@ urlpatterns = [
     # - Dashboard
     path('dashboard', views.dashboard, name="dashboard"),
 
-    # - Logout url
+    # - Logout
     path('user-logout', views.user_logout, name="user-logout"),
 
-    # - Post Thought
-    path('post-thought', views.post_thought, name="post-thought"),
+    # - Post tgought
+    path('post-thought', views.post_thought, name='post-thought'),
 
     # - My thoughts
     path('my-thoughts', views.my_thoughts, name="my-thoughts"),
 
+    # - Update thought
+    path('update-thought/<str:pk>', views.update_thought, name="update-thought"),
+
+    # - Delete thought
+    path('delete-thought/<str:pk>', views.delete_thought, name="delete-thought"),
+
+    # - Profile management
+    path('profile-management', views.profile_management, name="profile-management"),
+
+    # - Delete account
+    path('delete-account', views.delete_account, name="delete-account"),
 ]

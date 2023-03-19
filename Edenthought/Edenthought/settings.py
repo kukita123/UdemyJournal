@@ -28,13 +28,19 @@ environ.Env.read_env()
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-q^0$*gu=d@6y(n!he_h(a-l(stl99r-g51h7rlfi@4tp(vxhvl'
+# SECRET_KEY = 'django-insecure-q^0$*gu=d@6y(n!he_h(a-l(stl99r-g51h7rlfi@4tp(vxhvl'
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY', default='django-insecure-q^0$*gu=d@6y(n!he_h(a-l(stl99r-g51h7rlfi@4tp(vxhvl')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = ['*']
+# https://docs.djangoproject.com/en/3.0/ref/settings/#allowed-hosts
+ALLOWED_HOSTS = []
 
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Application definition
 
@@ -54,6 +60,8 @@ INSTALLED_APPS = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -104,7 +112,7 @@ WSGI_APPLICATION = 'Edenthought.wsgi.application'
 
 DATABASES = {
 
-    'default': dj_database_url.parse(env('DATABASE_URL'))
+    'default': dj_database_url.config(env('DATABASE_URL'))
 }
 
 # Password validation
@@ -143,9 +151,24 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [BASE_DIR/'static']
+# STATICFILES_DIRS = [BASE_DIR/'static']
 
-MEDIA_ROOT = BASE_DIR/'static/images'
+# MEDIA_ROOT = BASE_DIR/'static/images'
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
+
+# if not DEBUG:
+#     # Tell Django to copy statics to the `staticfiles` directory
+#     # in your application directory on Render.
+#     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#     # Turn on WhiteNoise storage backend that takes care of compressing static files
+#     # and creating unique names for each version so they can safely be cached forever.
+#     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
